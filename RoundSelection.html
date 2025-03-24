@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rounded Text Selection</title>
+    <title>Rounded Selection</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,19 +19,19 @@
             padding: 20px;
         }
 
-        /* Hide default selection */
+        /* hide default selection */
         ::selection {
             background: transparent;
         }
 
-        /* Custom Rounded Selection Overlay */
+        /* custom Rounded Selection Overlay */
         .selection-overlay {
             position: absolute;
-            background: rgb(16, 145, 119); /* selection color */
-            border-radius: 0.4rem; /* Rounded corners */
+            background: rgb(16, 145, 119);
+            border-radius: 0.4rem; 
             z-index: -1;
-            pointer-events: none;
         }
+
     </style>
 </head>
 <body>
@@ -43,26 +43,22 @@
         document.addEventListener("selectionchange", () => {
             let selection = window.getSelection();
             let range = selection.rangeCount ? selection.getRangeAt(0) : null;
-            let width_inc = 5;
+            let width_inc = 3;
             let heigh_inc = 10;
-            // Remove previous overlays
+            // remove previous overlays
             document.querySelectorAll(".selection-overlay").forEach(el => el.remove());
 
             if (range && !selection.isCollapsed) {
                 let rects = range.getClientRects();
-                rects = [...rects]; // Convert to array for iteration
+                rects = [...rects];
 
                 rects.forEach(rect => {
                     let div = document.createElement("div");
                     div.className = "selection-overlay";
-                    
-                    // Increase height by 10px and adjust positioning to stay centered
-                    div.style.left = `${rect.left + window.scrollX - width_inc/2}px`; /* Add padding left */
-                    div.style.top = `${rect.top + window.scrollY - heigh_inc/2}px`; /* Adjust to center */
+                    div.style.left = `${rect.left + window.scrollX - width_inc/2}px`; /* calculate correct position from left */
+                    div.style.top = `${rect.top + window.scrollY - heigh_inc/2}px`; /* calculate correct position from top */
                     div.style.width = `${rect.width + width_inc}px`; /* Increase width */
                     div.style.height = `${rect.height + heigh_inc}px`; /* Increase height */
-                    div.style.opacity = "1"; // Make visible
-
                     document.body.appendChild(div);
                 });
             }
