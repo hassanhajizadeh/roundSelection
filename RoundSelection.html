@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rounded Text Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #202020;
+            color: #e5e5e5;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Hide default selection */
+        ::selection {
+            background: transparent;
+        }
+
+        /* Custom Rounded Selection Overlay */
+        .selection-overlay {
+            position: absolute;
+            background: rgb(16, 145, 119); /* selection color */
+            border-radius: 0.4rem; /* Rounded corners */
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Round Selecting</h1>
+    <p>Try selecting any text in this paragraph or any area in this page that you want. </p>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam deserunt, aliquam nihil nemo amet aspernatur, sunt facilis maiores earum adipisci non voluptatum aut labore itaque odit atque ducimus inventore praesentium!</p>
+    <script>
+        document.addEventListener("selectionchange", () => {
+            let selection = window.getSelection();
+            let range = selection.rangeCount ? selection.getRangeAt(0) : null;
+            let width_inc = 5;
+            let heigh_inc = 10;
+            // Remove previous overlays
+            document.querySelectorAll(".selection-overlay").forEach(el => el.remove());
+
+            if (range && !selection.isCollapsed) {
+                let rects = range.getClientRects();
+                rects = [...rects]; // Convert to array for iteration
+
+                rects.forEach(rect => {
+                    let div = document.createElement("div");
+                    div.className = "selection-overlay";
+                    
+                    // Increase height by 10px and adjust positioning to stay centered
+                    div.style.left = `${rect.left + window.scrollX - width_inc/2}px`; /* Add padding left */
+                    div.style.top = `${rect.top + window.scrollY - heigh_inc/2}px`; /* Adjust to center */
+                    div.style.width = `${rect.width + width_inc}px`; /* Increase width */
+                    div.style.height = `${rect.height + heigh_inc}px`; /* Increase height */
+                    div.style.opacity = "1"; // Make visible
+
+                    document.body.appendChild(div);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
