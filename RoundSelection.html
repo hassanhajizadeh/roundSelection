@@ -4,66 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rounded Selection</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color: #202020;
-            color: #e5e5e5;
-        }
-
-        p {
-            font-size: 20px;
-            line-height: 1.6;
-            padding: 20px;
-        }
-
-        /* hide default selection */
-        ::selection {
-            background: transparent;
-        }
-
-        /* custom Rounded Selection Overlay */
-        .selection-overlay {
-            position: absolute;
-            background: rgb(16, 145, 119);
-            border-radius: 0.4rem; 
-            z-index: -1;
-        }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <h1>Round Selecting</h1>
     <p>Try selecting any text in this paragraph or any area in this page that you want. </p>
     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam deserunt, aliquam nihil nemo amet aspernatur, sunt facilis maiores earum adipisci non voluptatum aut labore itaque odit atque ducimus inventore praesentium!</p>
-    <script>
-        document.addEventListener("selectionchange", () => {
-            let selection = window.getSelection();
-            let range = selection.rangeCount ? selection.getRangeAt(0) : null;
-            let width_inc = 3;
-            let heigh_inc = 10;
-            // remove previous overlays
-            document.querySelectorAll(".selection-overlay").forEach(el => el.remove());
 
-            if (range && !selection.isCollapsed) {
-                let rects = range.getClientRects();
-                rects = [...rects];
-
-                rects.forEach(rect => {
-                    let div = document.createElement("div");
-                    div.className = "selection-overlay";
-                    div.style.left = `${rect.left + window.scrollX - width_inc/2}px`; /* calculate correct position from left */
-                    div.style.top = `${rect.top + window.scrollY - heigh_inc/2}px`; /* calculate correct position from top */
-                    div.style.width = `${rect.width + width_inc}px`; /* Increase width */
-                    div.style.height = `${rect.height + heigh_inc}px`; /* Increase height */
-                    document.body.appendChild(div);
-                });
-            }
-        });
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>

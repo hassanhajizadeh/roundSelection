@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 50px;
+    background-color: #202020;
+    color: #e5e5e5;
+}
+
+p {
+    font-size: 20px;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* hide default selection */
+::selection {
+    background: transparent;
+}
+
+/* custom Rounded Selection Overlay */
+.selection-overlay {
+    position: absolute;
+    background: rgb(16, 145, 119);
+    border-radius: 0.4rem; 
+    z-index: -1;
+}
