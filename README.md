@@ -21,6 +21,10 @@ roundSelection/
 └── script.js
 ```
 
+## Screenshot
+
+![alt image](demo.png)
+
 ## 🚀 How to Run Locally
 
 1. Clone the repository:
